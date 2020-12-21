@@ -50,13 +50,14 @@ def host_build_number(host):
   print("Hostname : " + hostname)
   print("Build    : " + build)
   print("")
-  return build, hostname
+  return int(build)
 
 #Get lastest ESXi build number from Virten
 def latest_build():
   builds = json.loads(requests.get("https://www.virten.net/repo/esxiReleases.json").text)
   latest = (builds['data']['esxiReleases'][0]['build'])
   print("Latest ESXi build is: " + latest)
+  return int(latest)
 
 #Writes data to InfluxDB
 def write_to_influx(hostname, update):
@@ -65,7 +66,7 @@ def write_to_influx(hostname, update):
         measurement['tags'] = {}
         measurement['tags'] ['host'] = hostname
         measurement['fields'] = {}
-        measurement['fields']['poweredOn'] = update
+        measurement['fields']['value'] = update
         try:
           influx_client.switch_database(influx_db)
           influx_client.write_points([measurement])
@@ -76,10 +77,12 @@ def write_to_influx(hostname, update):
 
 def main():
   for host in hosts:
+    summary = host.summary
+    hostname = summary.config.name
     if latest_build() >= host_build_number(host):
-      write_to_influx(1)
+      write_to_influx(hostname, 1)
     elif latest_build() == host_build_number(host):
-      write_to_influx(0)
+      write_to_influx(hostname, 1)
 
 if __name__ == "__main__":
   schedule.every(1).minutes.do(main)
