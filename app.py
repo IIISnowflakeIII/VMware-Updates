@@ -86,7 +86,8 @@ def main():
 
 if __name__ == "__main__":
   print("Starting vSphere update monitor...")
-  schedule.every(1).minutes.do(main)
+  main()
+  schedule.every(30).minutes.do(main)
   while 1:
     schedule.run_pending()
     time.sleep(1)
