@@ -55,6 +55,7 @@ def latest_build():
   latest = (builds['data']['esxiReleases'][0]['build'])
   print("Latest ESXi build is: " + latest)
 
+#Writes data to InfluxDB
 def write_to_influx(hostname, update):
         measurement = {}
         measurement['measurement'] = 'vsphere_update_available'
