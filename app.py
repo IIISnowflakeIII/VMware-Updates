@@ -5,6 +5,7 @@ from pyVim import connect
 from pyVmomi import vim
 from os import environ
 import requests
+import logging
 import json
 
 #Get host variables
@@ -75,7 +76,7 @@ def main():
   for host in hosts:
     if latest_build() >= host_build_number(host):
       write_to_influx(1)
-    elif latest_build() == host_build_number(host)
+    elif latest_build() == host_build_number(host):
       write_to_influx(0)
 
 if __name__ == "__main__":
