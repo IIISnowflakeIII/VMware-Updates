@@ -4,6 +4,7 @@ from influxdb.exceptions import InfluxDBClientError
 from pyVim import connect
 from pyVmomi import vim
 from os import environ
+from requests import requests
 import logging
 import schedule
 import time
