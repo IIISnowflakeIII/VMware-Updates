@@ -85,6 +85,7 @@ def main():
       write_to_influx(hostname, 1)
 
 if __name__ == "__main__":
+  print("Starting vSphere update monitor...")
   schedule.every(1).minutes.do(main)
   while 1:
     schedule.run_pending()
