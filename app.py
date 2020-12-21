@@ -80,9 +80,9 @@ def main():
     summary = host.summary
     hostname = summary.config.name
     if latest_build() >= host_build_number(host):
-      write_to_influx(hostname, 1)
+      write_to_influx(hostname, True)
     elif latest_build() == host_build_number(host):
-      write_to_influx(hostname, 1)
+      write_to_influx(hostname, False)
 
 if __name__ == "__main__":
   print("Starting vSphere update monitor...")
